@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="glass-panel">
+            <h2 class="mb-4">👨‍🚀 Досье космонавта</h2>
+            
+            <div class="row mb-3">
+                <div class="col-md-4 text-muted">Email (Логин):</div>
+                <div class="col-md-8">{{ user.email }}</div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-4 text-muted">Канал связи:</div>
+                <div class="col-md-8">{{ user.phone_number|default:"Не указан" }}</div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-4 text-muted">База доставки:</div>
+                <div class="col-md-8">{{ user.address|default:"Не указана" }}</div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-4 text-muted">Статус ПДн (152-ФЗ):</div>
+                <div class="col-md-8">
+                    {% if user.pd_consent %}
+                        <span class="badge bg-success">✅ Согласие дано (IP: {{ user.pd_consent_ip|default:"Не зафиксирован" }})</span>
+                    {% else %}
+                        <span class="badge bg-danger">❌ Не дано</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4 text-muted">Статус аккаунта:</div>
+                <div class="col-md-8">
+                    {% if user.is_active %}
+                        <span class="badge bg-info">Активен</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Ожидает подтверждения Email</span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            
+            <div class="d-flex gap-2">
+                <a href="#" class="btn btn-outline-light">Изменить данные</a>
+                <a href="{% url 'accounts:logout' %}" class="btn btn-outline-danger ms-auto">Аннулировать допуск</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

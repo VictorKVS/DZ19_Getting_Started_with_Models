@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4">🌌 Каталог ORBITA PRIME</h1>
+    <p class="text-muted">Выберите маршрут или снаряжение для вашего космического путешествия</p>
+</div>
+
+{% if products %}
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-panel h-100 d-flex flex-column">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="img-fluid rounded mb-3" alt="{{ product.name }}" style="max-height: 200px; object-fit: cover;">
+                {% else %}
+                    <div class="text-center py-5 mb-3" style="background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        <span style="font-size: 4rem;">🚀</span>
+                    </div>
+                {% endif %}
+                
+                <h4>{{ product.name }}</h4>
+                <p class="text-muted small flex-grow-1">{{ product.description|truncatewords:20 }}</p>
+                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="h4 text-info mb-0">{{ product.price }} ₽</span>
+                    <small class="text-muted">Остаток: {{ product.stock }}</small>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <a href="{% url 'shop:product_detail' product.slug %}" class="btn btn-outline-light flex-grow-1">Подробнее</a>
+                    <form method="post" action="{% url 'shopping_cart:add_to_cart' product.id %}" class="flex-grow-1">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-cosmic w-100">В корзину</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="glass-panel text-center py-5">
+        <h3 class="text-muted">🛸 Каталог пока пуст</h3>
+        <p class="text-muted">Товары скоро появятся. Загляните позже!</p>
+    </div>
+{% endif %}
+{% endblock %}

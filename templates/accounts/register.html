@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="glass-panel fade-in-up">
+            <h2 class="text-center mb-4">🚀 Подача заявки на орбитальный полёт</h2>
+            
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                        {% endif %}
+                        {% if field.help_text %}
+                            <div class="form-text text-muted">{{ field.help_text }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-cosmic btn-lg">Зарегистрироваться</button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-3">
+                <small>Уже есть допуск? <a href="{% url 'accounts:login' %}" class="text-info">Войти в систему</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

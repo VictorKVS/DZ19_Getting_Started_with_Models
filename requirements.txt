@@ -1,0 +1,11 @@
+# Core framework
+Django==5.2.16
+
+# Environment variables (для SECRET_KEY и других секретов)
+python-dotenv==1.0.1
+
+# Testing (опционально, но рекомендуется)
+pytest==8.3.4
+pytest-django==4.9.0
+pytest-cov==6.0.0
+
