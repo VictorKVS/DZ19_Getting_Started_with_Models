@@ -1,34 +1,19 @@
-$gitignore_content = @"
-# Python
+$gi = @"
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
-.Python
-
-# Virtual Environment
 venv/
 env/
 ENV/
-
-# Django
 *.log
-local_settings.py
 db.sqlite3
 db.sqlite3-journal
 /media
-
-# Environment variables (НИКОГДА не загружайте пароли!)
 .env
 .env.local
-.env.*.local
-
-# IDE
 .vscode/
 .idea/
 *.swp
-*.swo
 "@
-
-Set-Content -Path ".gitignore" -Value $gitignore_content -Encoding UTF8
-Write-Host "✅ Файл .gitignore создан!" -ForegroundColor Green
+Set-Content -Path ".gitignore" -Value $gi -Encoding UTF8
+Write-Host "OK gitignore fixed"

@@ -165,6 +165,8 @@ DZ19/
 └── 📁 media/                       # 📸 Загружаемые файлы (игнорируется в Git)
     ├── products/                   # Изображения товаров
     └── avatars/                    # Аватарки пользователей
+```
+
 
 🚀 5. Инструкция по запуску
 
@@ -204,6 +206,7 @@ python manage.py runserver
 
 🏭 6. Промышленный цикл разработки (IDC)
 
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │  ШАГ 1: ПОСТАНОВКА ЗАДАЧИ  ✅ Завершена (этот README)       │
 │  ШАГ 2: АРХИТЕКТУРА         ✅ Завершена (схема выше)       │
@@ -212,6 +215,7 @@ python manage.py runserver
 │  ШАГ 5: ТЕСТЫ               ⏳ Ожидает                      │
 │  ШАГ 6: DEVSECOPS           ⏸️ Опционально                  │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ✅ 7. Чек-лист соответствия ТЗ
 Кастомная модель (email, phone, address)
@@ -229,26 +233,53 @@ python manage.py runserver
 Версия: 0.1.0-alpha
 
 
+## 🗺️ Статус реализации проекта (Актуально)
+
+| № | Компонент / Файл | Задача | Статус |
+|---|------------------|--------|:------:|
+| 1 | `config/settings.py` | Настройки, `AUTH_USER_MODEL`, Email Backend | ✅ Готово |
+| 2 | `config/urls.py` | Главный роутер (admin, accounts, shop, cart) | ✅ Готово |
+| 3 | `accounts/models.py` | `CustomUser` + поля 152-ФЗ (`pd_consent`, IP) | ✅ Готово |
+| 4 | `accounts/managers.py` | `CustomUserManager` (создание пользователей) | ✅ Готово |
+| 5 | `accounts/forms.py` | Формы с валидацией email и уникальностью | ✅ Готово |
+| 6 | `accounts/views.py` | Регистрация, активация, вход, профиль, сброс пароля | ✅ Готово |
+| 7 | `accounts/urls.py` | Маршруты аутентификации | ✅ Готово |
+| 8 | `shop/models.py` | Модель `Product` (каталог товаров) | ✅ Готово |
+| 9 | `shopping_cart/models.py` | `Cart` и `CartItem` (связь с `Product`) | ✅ Готово |
+| 10| `shopping_cart/utils.py` | `merge_session_cart` (перенос из сессии в БД) | ✅ Готово |
+| 11| `shopping_cart/views.py` | Добавление, удаление, просмотр корзины | ✅ Готово |
+| 12| `templates/` | Космический UI (Glassmorphism, Bootstrap 5) | ✅ Готово |
+| 13| `shopping_cart/tests/` | Unit-тесты логики слияния корзины | ✅ Готово |
+
+> **Примечание:** Архитектурные паттерны `services.py` и `selectors.py` (CQRS-lite) намеренно интегрированы непосредственно в `views.py` и `utils.py` для соблюдения принципа *Thin Views* и упрощения кодовой базы в рамках данного MVP, при полном сохранении бизнес-логики и тестового покрытия.
+
+---
+## 📸 Скриншоты интерфейса
+
+<div align="center">
+
+### 🌌 1. Витрина магазина (Каталог)
+![Витрина магазина](docs/screenshots/01-shop-catalog.png)
+
+### 🚀 2. Форма регистрации (с согласием 152-ФЗ)
+![Регистрация](docs/screenshots/02-register-form.png)
+
+### 🔐 3. Страница входа в систему
+![Вход](docs/screenshots/03-login-form.png)
+
+### 👨‍🚀 4. Личный кабинет (Досье космонавта)
+![Профиль](docs/screenshots/04-profile-dossier.png)
+
+### 🛒 5. Корзина с добавленными товарами
+![Корзина](docs/screenshots/05-cart-items.png)
+
+### ⚙️ 6. Панель администратора (Управление товарами)
+![Админка](docs/screenshots/06-admin-products.png)
+
+</div>
+
 ---
 
-## 🗺️ ШАГ 2: План файлов (что будем делать дальше)
-
-| № | Файл | Задача | Статус |
-|---|------|--------|:------:|
-| 1 | `config/settings.py` | Настройки + AUTH_USER_MODEL + логирование | ⏳ |
-| 2 | `config/urls.py` | Главный роутер | ⏳ |
-| 3 | `accounts/managers.py` | CustomUserManager (создание пользователей) | ⏳ |
-| 4 | `accounts/models.py` | CustomUser + 152-ФЗ поля | ⏳ |
-| 5 | `accounts/forms.py` | Формы регистрации/входа с валидацией | ⏳ |
-| 6 | `accounts/services.py` | UserService (бизнес-логика) | ⏳ |
-| 7 | `accounts/views.py` | HTTP-обёртки (register, login, activate, profile) | ⏳ |
-| 8 | `accounts/urls.py` | Маршруты | ⏳ |
-| 9 | `cart/models.py` | Cart + CartItem | ⏳ |
-| 10 | `cart/utils.py` | merge_session_cart | ⏳ |
-| 11 | `templates/base.html` | Космический каркас (Bootstrap 5) | ⏳ |
-| 12 | `templates/accounts/*.html` | Шаблоны регистрации/входа/профиля | ⏳ |
-
----
 
 ## 🎯 Что делаем прямо сейчас?
 
@@ -260,6 +291,3 @@ python manage.py runserver
 5. **Построчное объяснение** (учебное пособие)
 
 Пойдём по порядку: `settings.py` → `urls.py` → `managers.py` → ... → `templates/`.
-
-**Готовы?** Жду команду "ДА"! 🚀
-
